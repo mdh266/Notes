@@ -1,0 +1,61 @@
+\documentclass[10pt]{report}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\numberwithin{equation}{section}
+
+\usepackage{color}
+
+\title{Mathematical Analysis Notes}
+
+\author{Michael Harmon}
+
+\begin{document}
+
+\maketitle
+
+\chapter{Banach Spaces}
+
+\textbf{\textcolor{magenta}{Metric:}}  For a given set \textbf{X}, $d: \textbf{X} \times \textbf{X} \rightarrow \mathbb{R}$ is a metric if,
+
+\begin{enumerate}
+\item $ \forall x, y \in \textbf{X}, \, d(x,y) \geq 0$
+\item $ \forall x,y \in \textbf{X}, \, d(x,y)  = d(y,x)$
+\item $ \forall x, y,z  \in \textbf{X}, \, d(x,z) \leq d(x,y) + d(y,z)$
+\end{enumerate}
+
+\noindent
+\textbf{\textcolor{magenta}{Metric Space:}}  Let \textbf{X} b a set and $d: \textbf{X} \times \textbf{X} \rightarrow \mathbb{R}$ be a metric, then $(\textbf{X}, d)$ is a metric space.
+
+\vspace{2mm}
+
+\noindent
+\textcolor{red}{A metric space is complete if every Cauchy sequence converges to a point in it.}
+
+\vspace{2mm}
+
+\noindent
+\textbf{\textcolor{magenta}{Normed Linear Space:}}  Let \textbf{X} be a vector space and $\Vert \cdot \Vert$ a norm such that $ \forall \textbf{x}, \textbf{y} \in \textbf{X}$ and $\lambda \in \mathbb{R} \text{ or } \mathbb{C}$,
+
+\begin{enumerate}
+\item $\Vert \lambda \textbf{x} \Vert = \vert \lambda \vert \Vert \textbf{x} \Vert$
+\item $ \Vert \textbf{x} \Vert  = 0 \, \leftrightarrow \, \textbf{x} = 0$
+\item $\Vert \textbf{x} + \textbf{y} \Vert  \, \leq \, \Vert \textbf{x} \Vert +  \Vert \textbf{y} \Vert $
+\end{enumerate}
+
+\noindent
+then $\left(\textbf{X}, \Vert \cdot \Vert \right)$ is a NLS.
+
+\vspace{2mm}
+
+\noindent
+{ \color{green} Example:
+$$C([a,b]) = \left\{ 
+f: \, [a,b] \rightarrow \mathbb{F} \text{, where f is cont. and } \sup_{[a,b]} \vert f(x) \vert < \infty 
+\right\} $$
+}
+
+\end{document}
