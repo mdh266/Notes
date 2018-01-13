@@ -33,31 +33,32 @@ numerical methods for partial differential equations.  While finite element meth
 
 
 \noindent
-Where $\epsilon(x)$ is bounded positive-definite function. And the boundary conditions are:
+Where $ 0 < \epsilon_{*} 
+\leq \epsilon(x)  \leq \epsilon^{*} $ is bounded positive-definite function. And the boundary conditions are:
 
 
 \begin{align}
 \Phi \, &= \, \Phi_{D} \qquad \text{on} \quad \partial \Omega_{D} \label{eq:DirichletBC} \\
--\nabla \Phi \, \cdot \, \boldsymbol \eta  &= 0 \qquad \text{on} \quad \partial \Omega_{N} \label{eq:NeumannBC} \\
+-\nabla \Phi \, \cdot \, \boldsymbol \eta  &= \Phi_{N} \qquad \text{on} \quad \partial \Omega_{N} \label{eq:NeumannBC} \\
  \partial \Omega = \partial \Omega_{D} \, \cup \, \partial \Omega_{N} \quad & \quad \partial \Omega_{D} \, \cap \, \partial \Omega_{N} = \emptyset
 \end{align}
 
 
 \noindent
-Where $\partial \Omega_{D}$ correspond to contacts or interfaces where potentials (voltages) are applied and $\partial \Omega_{N}$ corresponds to oxides that act as insulators to charge flow.
-
+Where $\partial \Omega_{D}$ correspond to Dirichlet portions boundary and $\partial \Omega_{N}$ corresponds to Neumann portions of the boundary.  We require that $\Phi_{D} \in H^{1/2}(\partial \Omega_{D})$, $\Phi_{N} \in H^{1/2}(\partial \Omega_{N})$, and $f \in H^{-1}(\Omega)$.
+ 
 
 
 \vspace{2mm}
 
 
 \noindent
-Finite element methods seek weak solutions of differential equation $\Phi \in H^{1}(\Omega)$ by multiplying our equation by a test function $v \in H^{1}(\Omega)$ and integrating by parts over entire the domain
+Finite element methods seek \textit{weak solutions} of differential equation $\Phi \in H^{1}(\Omega)$ by multiplying our equation by a test function $v \in H^{1}(\Omega)$ and integrating over entire the domain
 
 $$ \int_{\Omega} \, - v \, \nabla  \, \cdot \, \left(\epsilon \, \nabla \, \Phi \right) \, dx \, =  \, \int_{\Omega} \, v \, f \, dx $$
 
 \noindent
-Becomes
+Using integration by parts on the left hand side this becomes
 
 
 \vspace{2mm}
@@ -75,7 +76,7 @@ Becomes
 
 
 \noindent
-Using the condition of \eqref{eq:NeumannBC} we have require the Neumann boundary condition to be zero:
+Using the condition of \eqref{eq:NeumannBC} we have  the Neumann boundary condition to be  $\Phi_{N}$:
 
 
 \vspace{2mm}
@@ -84,51 +85,128 @@ Using the condition of \eqref{eq:NeumannBC} we have require the Neumann boundary
 $$
 \int_{\Omega} \,  \,  \nabla \, v \, \cdot \, \left(\epsilon \, \nabla \, \Phi \right) \,  dx \, 
 -\int_{\partial \Omega_{D}} \,  \,  v \,\left(\epsilon \, \nabla \, \Phi \, \cdot \, \boldsymbol \eta \right) \,dx \,  
-=  \, \int_{\Omega} \, v \, f \,   dx 
+=  \, \int_{\Omega} \, v \, f \,   dx  \, - \, \int_{\partial \Omega_{N}} \,  v \, \Phi_{N} \, dx
 $$
 
-\noindent
-In order to make our problem well-defined, we require that $v = 0$ on $\partial \Omega_{D}$.\footnote{In finite element methods, Neumann (natural) boundary conditions are enforced by the formulation of problem, while Dirichlet (essential) boundary conditions are enforced by restricting our test space.}  Poisson's equation then becomes:
 
+\noindent
+Our problem \eqref{eq:Poisson}, \eqref{eq:DirichletBC} and \eqref{eq:NeumannBC}  then becomes, 
 
 \begin{center}
 Find $\Phi-\Phi_{D} \in V = \{ \phi \in H^{1}(\Omega): \phi = 0 \quad \text{on} \quad \partial \Omega_{D} \}$. Such that for all $v \, \in \, V$ we have:
 \end{center}
 
 
-\begin{equation}
+\begin{equation} \label{eq:PoissonWeakForm}
 \int_{\Omega} \, \epsilon(x) \, \left(  \nabla \, \Phi \cdot \,
  \nabla \, v \, \right) \, dx \, 
-=  \, \int_{\Omega} \,  f \, v \, dx 
+=  \, \int_{\Omega} \,  f \, v \, dx  \, - \, \int_{\partial \Omega_{N}} \,  v \, \Phi_{N} \, dx
 \end{equation}
 
 \vspace{3mm}
 
+
 \noindent
-In order to solve this problem we must project our infinite dimensional test space $V$ on to a finite dimensional one $V_{h} = \text{span}\{\psi_{1}, \psi_{2}, \ldots , \psi_{N}\}$, where $N$ is the dimension of our vector space, our problem then transforms into the finite dimensional problem:
+Note, that we have turned our differential equation in \eqref{eq:Poisson} into a variational problem in \eqref{eq:PoissonWeakForm}.  We note our solution $\Phi$ and our test function $v$ both come from the same function space $H^{1}(\Omega)$, when this occurs our formulation is known as a \textit{Galerkin formulation}.   
+
+
+In the above we have shown that \textit{strong solutions}, that is solutions to, \eqref{eq:Poisson}, \eqref{eq:DirichletBC}, and \eqref{eq:NeumannBC} satisfy the variational formulation \eqref{eq:PoissonWeakForm}.  Going the other direction, one can show that with appropriate regularity conditions on $\Phi_{D}, \Phi_{N}$ and $f$,  solutions to \eqref{eq:PoissonWeakForm} satisfy \eqref{eq:Poisson}, \eqref{eq:DirichletBC}, and \eqref{eq:NeumannBC}.  This is important, because in it will show that our finite element methods (which are based of the variational form of Poisson's equation) are \textit{consistent}.  Consistency of a numerical method is a necessity to show that the method converges, i.e. our numerical approximations to the solution converge to the true solution.  
+
+
+\vspace{5mm}
+
+\noindent
+Calling our function space $V = H^{1}(\Omega)$, we can rewrite the above using a bilinear the functional $B: \, V \times V \rightarrow \mathbb{R}$ and our problem becomes
+
+\begin{center}
+Find $\Phi - \Phi_{D} \in V $ such that,
+\end{center}
+
+\begin{equation}\label{eq:PoissonBilinear}
+B \left( v \, , \Phi \, \right) \,  
+=  F(v) \qquad \forall \,  v  \, \in  V 
+\end{equation}
+
+
+\noindent
+Where 
+
+$$B\left( \, v \, , \Phi \, \right) \, =
+  \int_{\Omega} \, \epsilon(x) \, \left( \nabla \, v \, ,  \nabla  \, \Phi  \,
+ \right) \, dx \, $$ 
+ 
+ 
+\noindent
+And 
+
+
+$$ F(v)  =  \, \int_{\Omega} \, v \,  f  \, dx   \, - \, \int_{\partial \Omega_{N}} \,  v  \, \Phi_{N} \, dx$$
+
+
+In order to prove existence and uniqueness of a \textit{solution} $\Phi  \in V$ as well those to $\Phi \in V + \Phi_{D}$ we must show that our Galerkin formulation satisfies the requirements of the \textit{Lax-Milgram theorem}.  First we show $B(\cdot, \cdot) $ is \textit{continuous (bounded)} by Cauchy-Schwartz inequality:
+
+
+
+\begin{align*}
+|B(v , \Phi)| &= \left\vert \, \int_{\Omega} \epsilon(x) \nabla v \cdot \nabla \Phi \, dx \right\vert  \\
+&\leq \Vert \epsilon \Vert_{L_{\infty}} \, \Vert \nabla v \Vert|^{2}_{L_{2}(\Omega)} \, \Vert \nabla \Phi \Vert^{2}_{L_{2}} \,  \\
+&\leq  \epsilon^{*} \,  \Vert v \Vert_{H^{1}(\Omega)} \, \Vert \Phi \Vert_{H^{1}(\Omega)} 
+\end{align*}
+
+
+\noindent
+And that $B$ is \textit{coercive} by Poincare's inequality:
+
+\begin{align*}
+|B(\Phi, \Phi)| &= \left\vert \, \int_{\Omega} \epsilon(x) \, \left( \nabla \Phi \right)^{2}, dx \right\vert  \\
+&\geq \,\text{inf}_{\Omega} | \epsilon | \, \Vert \nabla \Phi \Vert^{2}_{L_{2}(\Omega)} \\
+&\geq \,  \epsilon_{*} \, C_{p}  \, \Vert \Phi \Vert_{H^{1}(\Omega)}^{2}
+\end{align*}
+
+\noindent
+Where $C_{p}$ is the Poincare constant and depends on $\Omega$.  Additionally, we must show that our right hand side functional, $F(v)$, is a continuous function of $v \in V$,
+
+\begin{align*}
+|F(v)| &= \left\vert  \, \int_{\Omega} \, v \,  f  \, dx   \, - \, \int_{\partial \Omega_{N}} \,  v  \, \Phi_{N} \, dx \, \right\vert \\
+&\leq \, \Vert v \Vert_{L^{2}(\Omega)}^{2} \, \Vert f \Vert_{L^{2}(\Omega)}^{2} + \Vert v \Vert_{L^{2}(\partial \Omega_{N})}^{2} \, \Vert \Phi_{N} \Vert_{L^{2}(\partial \Omega_{N})}^{2} \\
+&\leq \, \Vert v \Vert_{L^{2}(\Omega)}^{2} \, \Vert f \Vert_{L^{2}(\Omega)}^{2} + \Vert v \Vert_{H^{1}(\Omega)}^{2} \, \Vert \Phi_{N} \Vert_{L^{2}(\partial \Omega_{N})}^{2} 
+\end{align*}
+
+\noindent
+Where we have used the Trace Theorem on the last line.  Using $\Vert v \Vert_{L^{2}(\Omega)}^{2} \, \leq \, \Vert v \Vert_{H^{1}(\Omega)}^{2}$ we then have,
+
+
+\begin{align*}
+|F(v)| \, & \leq  \, \left(  \Vert f \Vert_{L^{2}(\Omega)}^{2} \, + \, 
+\Vert \Phi_{N} \Vert_{L^{2}(\partial \Omega_{N})}^{2} \right) \, \Vert v \Vert_{H^{1}(\Omega)}^{2} \\
+&\leq  \, C_{F}  \, \Vert v \Vert_{H^{1}(\Omega)}^{2}
+\end{align*}
+
+
+Now that we have shown solutions to \eqref{eq:PoissonWeakForm} exist and are unique we can discuss how to approximate those solutions with Finite Element methods.   In order to approximate solutions of $\Phi$ in we must project our infinite dimensional test space $V \, = \, H^{1}(\Omega)$ on to a finite dimensional one $V_{h} = \text{span}\{\psi_{1}, \psi_{2}, \ldots , \psi_{N}\}$, where $N$ is the dimension of our vector space, our problem \eqref{eq:PoissonWeakForm} then transforms into the finite dimensional problem:
 
 \begin{center}
 Find $\Phi_{h}-\Phi_{D} \in V_{h}$ such that $\forall \,  v_{h} \, \in  V_{h}$:
 \end{center}
 
-\begin{equation}\label{eq:PoissonWeakForm}
+\begin{equation} \label{eq:FEMPoisson}
 \int_{\Omega} \, \epsilon(x) \, \left(  \nabla \, v_{h} \, \cdot \,  \nabla  \, \Phi_{h} \, 
 \right) \, dx \, 
-=  \, \int_{\Omega}  \, v_{h} \,  f \, dx 
+=  \, \int_{\Omega}  \, v_{h} \,  f \, dx \, - \, \int_{\partial \Omega_{N}} \,  v_{h}  \, \Phi_{N} \, dx
 \end{equation}
 
 \vspace{3mm}
 
 
 \noindent
-We can rewrite this in bilinear the form of 
+We can rewrite the above using a  bilinear the functional $B: \, V_{h} \times V_{h} \rightarrow \mathbb{R}$, 
 
 \begin{center}
 Find $\Phi_{h}-\Phi_{D} \in V_{h}$ such that $\forall \,  v_{h} \, \in  V_{h}$:
 \end{center}
 
 \begin{equation}\label{eq:PoissonBilinear}
-a \left( v_{h} \, , \Phi_{h} \, \right) \,  
+B \left( v_{h} \, , \Phi_{h} \, \right) \,  
 =  F(v_{h})
 \end{equation}
 
@@ -136,7 +214,7 @@ a \left( v_{h} \, , \Phi_{h} \, \right) \,
 \noindent
 Where 
 
-$$a\left( \, v_{h} \, , \Phi_{h} \, \right) \, =
+$$B\left( \, v_{h} \, , \Phi_{h} \, \right) \, =
   \int_{\Omega} \, \epsilon(x) \, \left( \nabla \, v_{h} \, ,  \nabla  \, \Phi_{h} \,
  \right) \, dx \, $$ 
  
@@ -145,17 +223,19 @@ $$a\left( \, v_{h} \, , \Phi_{h} \, \right) \, =
 And 
 
 
-$$ F(v_{h})  =  \, \int_{\Omega} \, v_{h} \,  f  \, dx $$
+$$ F(v_{h})  =  \, \int_{\Omega} \, v_{h} \,  f  \, dx   \, - \, \int_{\partial \Omega_{N}} \,  v_{h}  \, \Phi_{N} \, dx$$
 
+
+\vspace{3mm}
 
 \noindent
 By writing defining $\Phi_{D} = \sum \, \Phi_{j} \, \psi_{j}$ and $v = \psi_{i}$ we arrive at linear system of equations:
 
-$$ A^{T} \textbf{x} \, = \, \textbf{F} $$
+$$ A \textbf{x} \, = \, \textbf{F} $$
 
 
 \noindent
-Where 
+Where,
 
 $$ A_{i,j} \, = \,   \int_{\Omega} \, \epsilon(x) \, \left(  \nabla  \, \psi_{i} \, \cdot \, \nabla \, \psi_{j} \right) \, dx \, $$
 
@@ -167,30 +247,97 @@ $$ \textbf{x}_{i} \, = \Phi_{i} $$
 
 
 
-\noindent
-In order existence and uniqueness of this problem we invoke the \textit{Lax-Milgram theorem}, and show $a$ is bounded by Cauchy-Schwarts:
-
-
-
-\begin{align*}
-|a(\psi, \Phi)| &= |\int_{\Omega} \epsilon(x) \nabla \psi \cdot \nabla \Phi \, dx |  \\
-&\leq \Vert \epsilon \Vert_{L_{\infty}} \, \Vert \nabla \psi \Vert|^{2}_{L_{2}(\Omega)} \, \Vert \nabla \Phi \Vert^{2}_{L_{2}} \,  \\
-&\leq \Vert \epsilon \Vert_{L_{\infty}} \,  \Vert  \psi \Vert|_{H^{1}(\Omega)} \, \Vert \Phi \Vert_{H^{1}(\Omega)} 
-\end{align*}
-
+\vspace{5mm}
 
 \noindent
-And coercivity by Poincare's inequality:
+We remark that the coercivity and continuity of $B$ and continuity of $F$ on $v \in V$ also hold on $v_{h} \in V_{h} \subset V$ ensuring existing and uniqueness of solutions to the finite dimensional problem. The coercivity and symmetry of $B$ ensure that our matrix $A$ is \textit{symmetric positive definite.}
 
-\begin{align*}
-|a(\Phi, \Phi)| &= \, |\int_{\Omega} \epsilon(x) \, \left( \nabla \Phi \right)^{2}, dx |  \\
-&\geq \,\text{inf}_{\Omega} | \epsilon | \, \Vert \nabla \Phi \Vert^{2}_{L_{2}(\Omega)} \\
-&\geq \, \text{inf}_{\Omega} | \epsilon | \, \Vert \Phi \Vert_{H^{1}(\Omega)}^{2}
-\end{align*}
+
+In numerical methods setting, the coercivity of $B$ is also known as \textit{stability}.  Stability of a numerical method is important because the \textit{Lax-Equivalence Theorem} states, 
+
+\begin{center}
+If your numerical method is consistent and stable then it is convergent.
+\end{center}
+
+\noindent
+We have shown that our variational formulation \eqref{eq:PoissonWeakForm} is consistent and therefore our numerical method is consistent. This means the true solution, $\Phi$ satisfies the numerical method,
+
+\begin{equation}
+\label{eq:PoissonConsistency}
+B\left( \, v_{h} \, , \Phi \, \right) \, = \, F(v_{h}), \quad \forall v_{h} \in V_{h}
+\end{equation}
+
+The coerecivity of $B$ shows that our method is stable and therefore says that our numerical method is convergent.  
+
+\vspace{2mm}
+
+We can prove convergence of our numerical method  formally by deriving error estimates for our approximation $\Phi_{h}$ of $\Phi$ by introducing a projection operator $P : V \rightarrow V_{h}$ that satisfies,
+
+\begin{equation}
+\Vert \Phi - P \Phi \Vert_{L^{2}}(\Omega) \; \leq \; Ch^{k+1}  \qquad \text{and} \qquad 
+\Vert \Phi - P \Phi \Vert_{H^{1}}(\Omega) \; \leq \; Ch^{k} \label{eq:ApproxProp}
+\end{equation}
+
+\noindent
+Then subtracting \eqref{eq:PoissonBilinear} from \eqref{eq:PoissonConsistency} we have,
+
+\begin{equation}
+B\left( \, v_{h} \, , \Phi \,  - \Phi_{h} \right) \, = \, 0, \quad \forall v_{h} \in V_{h}
+\end{equation}
+
+\noindent
+Then adding and subtracting $P \Phi$ we have,
+
+\begin{equation}
+B\left( \, v_{h} \, , \Phi_{h} \,  - P \Phi \right)  \, = \, B\left( \, v_{h} \, , \Phi \,  - P \Phi \right)    \quad \forall v_{h} \in V_{h}
+\end{equation}
+
+\noindent
+Choosing $v_{h} = \Phi_{h} - P \Phi \, \in V_{h}$ we have,
+
+\begin{equation}
+B\left( \, \Phi_{h} \,  - P \Phi  \, , \Phi_{h} \,  - P \Phi \right)  \, = \, B\left( \, \Phi_{h} \,  - P \Phi \, , \Phi \,  - P \Phi \right)   
+\end{equation}
+
+\noindent
+Using the coercivity and continuity of $B$ results in,
+
+\begin{equation}
+\epsilon_{*} C_{P} \Vert \Phi_{h} \,  - P \Phi  \Vert^{2}_{V} \, \leq \, \epsilon^{*} \, \Vert \Phi_{h} \,  - P \Phi  \Vert_{V}  \, \Vert \Phi \,  - P \Phi  \Vert_{V} 
+\end{equation}
+
+\noindent
+Dividing both sides by $\epsilon_{*} C_{P} \Vert \Phi_{h} \,  - P \Phi  \Vert_{V}$ yields,
+
+\begin{align}
+\Vert \Phi_{h} \,  - P \Phi  \Vert_{V} \, &\leq \, \frac{\epsilon^{*}}{\epsilon_{*} C_{P} } \, \Vert \Phi_{h} \,  - P \Phi  \Vert_{V}  \, \Vert \Phi \,  - P \Phi  \Vert_{V}  \\
+\Vert \Phi_{h} \,  - P \Phi  \Vert_{V} \,  &\leq \, \frac{\epsilon^{*}}{\epsilon_{*} C_{P} } \, \
+h^{k}
+\end{align}
+
+Alternatively, we note that $\Vert \Phi_{h} \,  - P \Phi  \Vert_{L^{2}} \, \leq \, \Vert \Phi_{h} \,  - P \Phi  \Vert_{L^{2}} $  and that Cauchy Schwartz,
+
+$$B\left( \, \Phi_{h} \,  - P \Phi \, , \Phi \,  - P \Phi \right)  \,
+\leq \, \epsilon^{*} \, \Vert \Phi_{h} \,  - P \Phi  \Vert_{L^2}  \, \Vert \Phi \,  - P \Phi  \Vert_{L^2} $$
+
+\noindent
+Which gives us,
+
+\begin{align}
+\Vert \Phi_{h} \,  - P \Phi  \Vert_{L^{2}(\Omega)} \, &\leq \, \frac{\epsilon^{*}}{\epsilon_{*} C_{P} } \, \Vert \Phi_{h} \,  - P \Phi  \Vert_{L^{2}(\Omega)}  \, \Vert \Phi \,  - P \Phi  \Vert_{L^{2}(\Omega)}  \\
+\Vert \Phi_{h} \,  - P \Phi  \Vert_{L^{2}(\Omega)} \,  &\leq \, \frac{\epsilon^{*}}{\epsilon_{*} C_{P} } \, \
+h^{k+1}
+\end{align}
+
+
+\noindent
+As $h \rightarrow 0$ we can see that our approximation $\Phi_{h}$ converges to $\Phi$ in $L^{2}(\Omega)$ and $H^{1}(\Omega)$.
 
 
 
 \vspace{5mm}
+
+
 
 \chapter{Time Dependent Error Estimates}
 
