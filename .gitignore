@@ -1,0 +1,6 @@
+.dropbox
+*.log
+*.aux
+*.synctex*
+*.toc
+*.*~
