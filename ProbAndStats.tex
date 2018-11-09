@@ -1,0 +1,923 @@
+\documentclass[10pt]{article}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\newtheorem{theorem}{Theorem}
+\numberwithin{equation}{section}
+
+
+\title{Probability And Statistics}
+
+\author{Michael Harmon}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+
+\newpage
+
+\section{Probability \& Random Variables}
+
+\subsection{Probability}
+\noindent
+\textbf{Sample Space ($\mathcal{S}$): } The set of all possible outcomes.
+
+\vspace{2mm}
+
+\noindent
+\textbf{Event:} Any collection of possible outcomes, $E \in \mathcal{S}$ from the sample space.
+
+\vspace{2mm}
+
+\noindent
+\textbf{Sigma Algebra:}  $\Sigma$ is a  collection of subsets of $\mathcal{S}$ such that,
+
+\begin{enumerate}
+\item $\emptyset \in \Sigma$
+\item If $A \in \Sigma$, then $A^{c} \in \Sigma$.
+\item If $A_{1}, A_{2}, \ldots \in \Sigma$ then $\cup_{i=1}^{\infty} A_{i} \in \Sigma$
+\end{enumerate}
+
+
+\vspace{2mm}
+
+\noindent
+\textbf{Probability Function:}  Given a sample space $\mathcal{S}$ and a Sigma algebra $\Sigma$ then a probability functon with domain $\Sigma$ satisfies
+
+\begin{enumerate}
+\item $P(A) \geq 0, \qquad \forall A \in \Sigma$
+\item $P(\mathcal{S}) = 1$
+\item If $A_{1}, A_{2}, \ldots  \in \Sigma$ are pairwise disjoint then $P(\cup_{i=1}^{\infty} A_{i}) = \cup_{i=1}^{\infty} P(A_{i})$
+\end{enumerate}
+
+\vspace{2mm}
+
+\noindent
+Probabilities can be thought of as a frequency of occurrence.
+
+\vspace{2mm}
+
+\noindent
+\textbf{Conditional Probabilities}
+
+$$ P(A | B) \; = \; \frac{P(A \cap B)}{P(B)}, \qquad P(B) > 0$$
+
+
+\noindent
+Let $A_{1}, A_{2}, \ldots, A_{n}$ be a partition of $\mathcal{S}$ then $P(B) \, = \, \sum_{i=1}^{n} P(B|A_{i}) P(A_{I}$.
+
+
+\vspace{2mm}
+
+\begin{theorem}
+\textbf{Bayes Theorem:} 
+
+Let $A_{1}, A_{2}, \ldots,$ be a partition of the space space $\mathcal{S}$ then,
+
+\begin{align}
+P(A_{i} \vert B) \; &= \; \frac{P(B \vert A_{i}) P(A_{i})}{P(B)} \\
+& = \frac{P(B \vert A_{i}) P(A_{i})}{\sum_{j=1}^{\infty} P(B \vert A_{j}) P(A_{j})}
+\end{align}
+\end{theorem}
+
+\noindent
+Two events $A$ and $B$ are \textbf{statistically independent} if
+\begin{equation}
+P(A \cap B ) \; = \; P(A) P(B) \qquad \text{or} \quad P(A \vert B) = P(A)
+\end{equation}
+
+
+\vspace{2mm}
+
+\subsection{Random Variables}
+
+\noindent
+\textbf{Random Variable:} A function $X: \, \mathcal{S} \rightarrow \mathbb{R}$
+
+\vspace{1mm}
+
+
+\noindent
+\textbf{Example:}  The sum of a roll of two die.
+
+
+\vspace{2mm}
+
+\noindent
+Probabilities can be induced by a random variable.
+
+$$ P_{X}(X = X_{i}), \qquad \text{Discrete} $$
+
+\noindent
+\text{or} 
+
+$$p(x), \qquad  \text{Continuous}$$ 
+
+\vspace{2mm}
+
+\noindent
+\textbf{Cumulative Distribution Function:} $F_{X}(x) \, = \, P_{X}(X < x)$
+
+
+\vspace{2mm}
+
+\noindent
+Two random variables $X, Y$ are \textbf{identically distributed} if 
+
+$$\forall A \in \Sigma: \quad P(X \in A) \; = \; P(Y \in A)$$
+
+\vspace{2mm}
+
+\noindent
+\textbf{Expectation Of Random Variables:}
+\begin{align}
+\text{E}(X) \quad &= \quad \sum_{i} X_{i} \, P(X_{i}) \\
+\text{E}(X) \quad &= \quad \int x \, p(x) \,dx
+\end{align} 
+
+\vspace{2mm}
+
+\noindent
+\textbf{Variance Of Random Variables:} (w/ mean $\mu_{X}$)
+\begin{equation}
+\text{Var}(X) \; = \; E[(X  \, - \, \mu_{X})^{2}] \; = \; E[X^{2}] - \left(E[X]\right)^{2}
+\end{equation}
+
+\vspace{2mm}
+
+\noindent
+\textbf{Covariance:} (of $X$ and $Y$)
+$$\text{cov}(X,Y) \; = \; E[(X - \mu_{X})(Y - \mu_{Y})] $$
+
+\noindent
+If $X$ and $Y$ are statistically independent then,
+
+\begin{align} 
+\text{cov}(X,Y) \; &= \; E_{X}[(X - \mu_{X})] E_{Y}[(Y - \mu_{Y})] \\ 
+&= \; 0
+\end{align}
+
+\noindent
+However, the converse is not true.
+
+\vspace{2mm}
+
+\noindent
+\textbf{Correlation:} (of $X$ and $Y$)
+$$\text{corr}(X,Y) \; = \;  \frac{\text{cov}(X,Y)}{\sigma_{X}^{2} \sigma_{Y}^{2}} $$
+
+\noindent
+Note that, $ \vert \text{corr}(X,Y) \vert  \leq 1 $. We also remark that,
+
+$$ \text{Var}(aX \pm  bY ) \; = \; a^{2} \text{Var}(X) + b^{2}\text{Var}(Y) \pm  2 \, a \, b \,  \text{cov}(X,Y)$$
+
+\noindent
+so that if $X$ and $Y$ are statistically independent,
+
+$$ \text{Var}(aX \pm  bY ) \; = \; a^{2} \text{Var}(X) + b^{2}\text{Var}(Y) $$
+
+\vspace{2mm}
+
+\noindent
+\textbf{Conditional Expectation Of Random Variables:}
+\begin{equation}
+\text{E}(X \vert Y =y  ) \quad = \quad \sum_{i} X_{i} \, P(X_{i} | Y = y ) 
+\end{equation} 
+
+\vspace{2mm}
+
+\noindent
+\textbf{Moment Generating Function}
+\begin{equation}
+M_{X}(t) \; = \; E_{X}[e^{tX}] 
+\end{equation}
+\noindent 
+Note: $M_{X}^{(n)}(0) \; = \; E[X^{n}]$. The MGF has issues with existence.
+
+\vspace{2mm}
+
+\noindent
+\textbf{Characteristic Function}
+\begin{equation}
+\phi_{X}(t) \; = \; E_{X}[e^{itX}] 
+\end{equation}
+\noindent 
+\textbf{Note:} $(-i)^{n} \, \phi_{X}^{(n)}(0) \; = \; E[X^{n}]$ and  for $X_{i}$ independent,
+
+$$ \phi_{\sum_{i=1}^{n} X_{i} } (t) = \prod_{i=1}^{n} \phi_{X_{i}}(t)$$
+
+
+\noindent
+This characteristic function always exists!
+
+\vspace{2mm}
+
+\noindent
+\begin{theorem} \textbf{Chebyshev Inequality}
+
+Let $X$ be a random variable and $g(X)$ be a non-decreasing function of $X$ then $\forall r > 0$,
+
+\begin{equation}
+P\left(g(X) > r \right) \quad \leq \quad \frac{E[g(X)]}{r}
+\end{equation}
+
+\end{theorem}
+
+\vspace{2mm}
+
+\noindent
+\textbf{Convex Function: } A function $f$ is convex if $\forall x_{1}, x_{2} \in X, \,  \forall t \in [0,1]$ then 
+
+\begin{equation}
+f \left( t x_1 + (1-t) x_2 \right) \quad \leq \quad t f(x_1) + (1-t) f(x_2) 
+\end{equation}
+
+\begin{theorem} \textbf{Jensen's Inequality}
+
+If $X$ is a random variable and $\phi$ is a convex function then,
+
+\begin{equation}
+\phi \left( E[X] \right) \quad \leq \quad E[ \phi(X) ] 
+\end{equation}
+
+\end{theorem}
+
+
+
+\section{Probability Distributions}
+
+Probability distributions defined for both continuous and random variables.  Random variables with discrete values have \textbf{discrete distributions}, while random variables with continuous values have \textbf{continous distributions}.
+
+\subsection{Discrete Distributions}
+
+\noindent
+\textbf{Bernoulli Distribution}
+
+\noindent
+A Bernoulli random variable binary outcome, 
+
+$$ x \; = \; \left\{
+\begin{array}{cl}
+1, &  \text{prob. } p  \\
+0, &  \text{prob. } 1-p 
+\end{array}
+ \right. $$
+ 
+ \noindent
+ \textbf{Distribution:}
+ 
+ \begin{equation}
+ P(x \, | \, p ) \; = \; p^{x} (1-p)^{(1-x)}
+ \end{equation}
+ 
+ \vspace{1mm}
+ 
+ \noindent
+ \textbf{Mean:} $E[x] \; = \;  p$
+ 
+  \noindent
+ \textbf{Variance:}  Var$(x) \; = \;  p(1-p)$
+ 
+ \vspace{3mm}
+ 
+ \noindent
+\textbf{Binomial Distribution}
+
+\noindent
+A binomial random variable $y$ is defined as the sum of $n$ independent Bernoulli random variables, $x_{i}$ all with prob. $p$:
+
+$$ y  \; = \; \sum_{i=1}^{n} x_{i}$$
+ 
+ \noindent
+ \textbf{Distribution:}  The distribution is given as a function of $y=k$ (success), where $k \leq n$ where ($n$ is the number of trials).  
+ 
+ \begin{equation}
+ P(y = k | \, n, p ) \; = \; \frac{n!}{(n-k)! k! } \, p^{k}  \, (1-p)^{(n-k)}
+ \end{equation}
+ 
+ \noindent
+ \textbf{Note:}  The product comes from the independence of the trials.
+ 
+\vspace{1mm}
+ 
+ \noindent
+ \textbf{Mean:} $E[x] \; = \;  np$
+ 
+  \noindent
+ \textbf{Variance:}  Var$(x) \; = \;  n \, p(1-p)$
+ 
+\vspace{1mm}
+ 
+ \noindent
+ \textbf{Note:} These results can come from the definition of i.i.d property of the $n$ Bernoulli trials and linearity of Var.
+ 
+ 
+ \vspace{3mm}
+ 
+ \noindent
+\textbf{Geometric Distribution}
+
+\noindent
+A geometric random variable $x$ is defined as the number $x=k$ of i.i.d Bernoulli trials \textit{until} a success.
+
+\vspace{1mm}
+
+ \noindent
+ \textbf{Distribution:}  
+ 
+ \begin{equation}
+ P(x=k) \; = \; p \, (1-p)^{k-1}
+ \end{equation}
+ 
+ 
+ \vspace{1mm} 
+
+\noindent
+\textbf{Mean:} $E[x] \; = \;  \frac{1}{p} $
+ 
+\noindent
+\textbf{Variance:}  Var$(x) \; = \;  \frac{(1-p)}{p^{2}}$
+
+\vspace{1mm}
+ 
+ \noindent
+ \textbf{Note:} A geometric random variable is \textbf{memoryless}, i.e. if $s > t$ then $(P(x > s | x > t) \, = \, P(x > s - t)$.
+ 
+ 
+  \vspace{3mm}
+ 
+ \noindent
+\textbf{Poisson Distribution}
+
+\noindent
+A Poisson random variable used to $x$ is defined as the number of occurrences within a fixed time interval, given that the ``average" number of occurrences is $\lambda$.
+
+\vspace{1mm}
+
+ \noindent
+ \textbf{Distribution:}  
+ 
+ \begin{equation}
+ P(x | \lambda)  \; = \;  \frac{\lambda^{x} e^{-\lambda}}{x!}, \qquad x \, = \, 1,2, \ldots
+ \end{equation}
+ 
+ 
+ \vspace{1mm} 
+
+\noindent
+\textbf{Mean:} $E[x] \; = \;  \lambda  $
+ 
+\noindent
+\textbf{Variance:}  Var$(x) \; = \;  \lambda $
+
+ 
+\subsection{Continuous Distributions}
+
+
+ 
+
+ \noindent
+\textbf{Beta Distribution}
+
+\vspace{1mm}
+
+ \noindent
+ \textbf{Distribution:}  
+ 
+ \begin{equation}
+ P(x | \alpha, \beta )  \; = \;  \frac{1}{B(\alpha, \beta)} x^{\alpha} (1-x)^{\beta -1}
+ \end{equation}
+ 
+ \noindent
+ For $ 0 < x < 1$, $\alpha > 0$ and $\beta > 0$.
+ 
+ \vspace{1mm} 
+
+\noindent
+\textbf{Mean:} $E[x] \; = \;  \frac{\alpha}{\alpha + \beta} $
+ 
+\noindent
+\textbf{Variance:}  Var$(x) \; = \;  \frac{\alpha \beta}{(\alpha + \beta)^{2} ( \alpha + \beta + 1)} $
+
+\noindent
+Where,
+
+\begin{align}
+B(\alpha, \beta) \; &= \; \int_{0}^{1} x^{\alpha-1} (1-x)^{\beta -1 } dx  \\
+&= \; \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \Gamma(\beta)}
+\end{align}
+
+
+\noindent
+\textbf{Note:}  Then Beta distribution is useful for deriving other distributions.
+
+
+\vspace{3mm}
+
+
+
+\noindent
+\textbf{Normal Distribution}
+
+\vspace{1mm}
+
+ \noindent
+ \textbf{Distribution:}  
+ 
+ \begin{equation}
+ P(x | \mu, \sigma^{2} )  \; = \;  \frac{1}{2 \pi \sigma^{2}} e^{-(x-\mu)^{2} / \sigma^{2}}
+ \end{equation}
+ 
+ 
+ \vspace{1mm} 
+
+\noindent
+\textbf{Mean:} $E[x] \; = \;  \mu $
+ 
+\noindent
+\textbf{Variance:}  Var$(x) \; = \;  \sigma^{2} $
+
+ 
+ \vspace{1mm} 
+
+
+\noindent
+\textbf{Note:}  Then,
+\begin{align}
+P( \vert x - \mu \vert \, \leq \; \; \sigma^{2} ) \; & \simeq \;  0.67 \\
+P( \vert x - \mu \vert \, \leq \, 2 \sigma^{2} ) \; & \simeq \;  0.95\\
+P( \vert x - \mu \vert \, \leq \, 3 \sigma^{2} ) \; & \simeq \;  0.99\\
+\end{align}
+
+\vspace{3mm}
+
+\noindent
+\textbf{Student $t$ Distribution}
+
+\noindent
+Arises from estimating mean of $N(\mu, \sigma^{2})$ population, but where sample size is small and $\sigma^{2}$ is unknown.  The \textbf{degrees of freedom} ($df > 2$ ) is 
+
+$$df \,= \, n-1$$
+
+\vspace{1mm}
+
+
+ \noindent
+ \textbf{Distribution:}  
+ 
+ 
+ \vspace{1mm} 
+
+\noindent
+\textbf{Mean:} $E[t] \; = \;  0  $
+ 
+\noindent
+\textbf{Variance:}  Var$(t) \; = \;  \frac{df}{df - 2}$
+
+\vspace{1mm} 
+
+\noindent
+\textbf{Note:}  The $t-$ distribution has fatter tails than normal distribution and is used for statistical significance between sample means and confidence intervals:
+
+$$ t \; = \; \frac{\bar{x} - \mu}{s/\sqrt{n}} $$
+
+
+ 
+ 
+ \vspace{3mm} 
+
+\noindent
+\textbf{$\chi^2$ Distribution}
+
+Let $Z_{1}, \ldots, Z_{k}$ be indep. normally distributed random variables then, 
+
+\begin{equation}
+Q \; = \; \sum_{i=1}^{k} Z_{i}^2
+\end{equation}
+
+\noindent
+is $chi^{2}$ distributed with $k$ degrees of freedom.
+
+\vspace{1mm}
+
+ \noindent
+ \textbf{Distribution:}  
+ 
+ \begin{equation}
+ P(x , k )   \; = \;  \frac{1}{2^{k/2} \Gamma(k/2)} x^{k/2 - 1} e^{-x/2}, \qquad x \in [0, \infty)
+ \end{equation}
+ 
+ 
+ \vspace{1mm} 
+
+\noindent
+\textbf{Mean:} $E[x] \; = \;  k $
+ 
+\noindent
+\textbf{Variance:}  Var$(x) \; = \;  2k $
+
+ 
+ \vspace{1mm} 
+
+
+\noindent
+\textbf{Note:}  Is used for $chi^2$ ``Goodness of fit" test.
+
+
+
+
+\subsection{Approximation Theorems}
+
+\begin{theorem}{Normal Approx. To Binomial Random Variables}
+
+When the number of trials, $n$, is sufficiently large then the probability of $x$ success in $n$ trials each having probability $p$ can be approximated with,
+
+\begin{equation}
+\text{Binomial}(n,p)(x) \quad \simeq \quad  \frac{1}{2 \pi \, n \, p \, (1-p)} e^{-(x-np)^{2} / np  (1-p)}
+\end{equation}
+
+\noindent
+Or $N_{\mu, \sigma^{2}}(x)$, where, $\mu \, = \, np$ and $\sigma^{2} = np(1-p)$.
+\end{theorem}
+
+
+\vspace{3mm}
+
+\begin{theorem}{Normal Approx. To Poisson Random Variables}
+
+When the average number of occurrences, $\lambda$, , is sufficiently large then the probability of $k$ occurrences can be approximated with,
+
+\begin{equation}
+\text{Poisson}(x,\lambda) \quad \simeq \quad  \frac{1}{2 \pi \lambda} e^{-(x-\lambda)^{2} / \lambda}
+\end{equation}
+
+\noindent
+Or $N_{\mu, \sigma^{2}}(x)$, where, $\mu \, = \, \lambda$ and $\sigma^{2} = \lambda$.
+\end{theorem}
+
+
+\section{Statistics \& Estimators}
+
+\subsection{Statistics}
+
+A \textbf{statistic} is any function of a sample.  An \textbf{Estimator is any function of a sample \textit{that is used to estimate a population parameter}}.  
+
+\vspace{2mm}
+
+\noindent
+Sample mean:
+
+$$ \bar{X} \; = \; \frac{1}{n} \sum_{i=1}^{n} X_i$$
+
+\noindent
+Sample variance
+
+$$ S^{2} \; = \;  \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^{2}$$
+
+\noindent
+\begin{theorem}
+Let $X_1, \, \ldots, \, X_n$ be a random sample from $N(\mu, \sigma^{2})$ and $ \bar{X} \; = \; \frac{1}{n} \sum_{i=1}^{n} X_i$ and
+$ S^{2} \; = \;  \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^{2}$.  Then, 
+
+\begin{enumerate}
+\item $ \bar{X}$ and $ S^{2}$ are independent random variables.
+\item $\bar{X} \; \sim \; N(\mu, \sigma^{2}/n)$
+\item $(n-1) \frac{S^{2}}{\sigma^{2}} \; \sim \; \chi^{2}_{n-1}$
+\end{enumerate}
+
+\end{theorem}
+
+
+\noindent
+Let $X_1, \ldots, X_n$ be a random sample from $N(\mu, \sigma^{2})$ then
+
+$$\frac{\bar{X} - \mu}{S/\sqrt{n}}
+ \; = \; 
+ \frac{(\bar{X} - \mu)(\sigma / \sqrt{n}) }{\sqrt{S^{2}/\sigma^{2}}}
+ \; = \;
+ \frac{N(0,1)}{\sqrt{\chi^{2}_{n-1} / (n-1)}} \quad (\text{Distributionally!})
+ $$ 
+
+\noindent
+That is,
+
+$$\frac{\bar{X} - \mu}{S/\sqrt{n}} \; \sim \; \text{Student t-distribution with n-1 deg. of freedom} $$
+
+
+\noindent
+\textbf{Unbiased Estimator:} An estimator $T(X)$ for a parameter $(\Theta)$ is unbiased if,
+
+$$ E[T(X)] \, = \, \Theta$$
+
+\noindent
+\begin{theorem}
+Let $X_1, \, \ldots, \, X_n$ be a random sample with mean $\mu$ and variance $S^2$, then
+\begin{enumerate}
+\item $E[ \bar{X} ] \; = \; \mu$ 
+\item $E[ S^{2} ] \; = \; \sigma^2$ 
+\item $\text{Var}(\bar(X) \; = \; \frac{\sigma^2}{n}$
+\end{enumerate}
+
+\end{theorem}
+
+
+\noindent
+\textbf{Sufficient Statistic}: A statistic $T(\textbf{x})$ is \textbf{sufficient statistic} for $\boldsymbol \theta$ if the conditional distribution of the sample $\textbf{x}$ given $T(\textbf{x})$ does not depend on $\boldsymbol \theta$.
+
+
+\noindent
+\begin{theorem}{Sufficiency Principle}
+If $T(\textbf{x})$ is a sufficient statistic for $\boldsymbol \theta$, then any inference about $\boldsymbol \theta$ should depend on the sample $\textbf{x}$ only through $T(\textbf{x})$.
+\end{theorem}
+
+\noindent
+\begin{theorem}{Factorization Theorem}
+Let $f(\textbf{x}  \, \vert \theta)$ denote the joint pdf or pm of sample $\textbf{X}$.  A statistic $T(\textbf{x})$ is a sufficient statistic for $\theta$ iff $\exists \, g(\textbf{t} \, \vert \theta)$ and $h(\textbf{x})$ s.t. $\forall \textbf{x}$ and $\theta$,
+
+$$ f(\textbf{x} | \theta) \; = \; g(T(\textbf{x}) | \theta) \, h (\textbf{x}) $$
+\end{theorem}
+
+
+
+
+\subsection{Convergence Theorems}
+
+\noindent
+\textbf{Convergence In Probability}
+Let $X_1, \, \ldots, \, X_n$ be a sequence of random variables then $X_{i} \; \rightarrow^{\mathcal{P}} \; X$. If $\forall \epsilon > 0, \; \lim_{n \rightarrow \infty} P(\vert X_i - X \vert > \epsilon ) \; = \; 0$.
+
+\vspace{2mm}
+
+\noindent
+\textbf{Absolute In Convergence}
+Let $X_1, \, \ldots, \, X_n$ be a sequence of random variables then $X_{i} \; \rightarrow^{A.S.} \; X$. If $\forall \epsilon > 0, \;  P(\lim_{n \rightarrow \infty}\vert X_i - X \vert > \epsilon ) \; = \; 0$.
+
+
+\vspace{2mm}
+
+\noindent
+\textbf{\textit{Absolute convergence is equivalent to pointwise convergence.}}
+
+
+\vspace{2mm}
+
+\noindent
+\textbf{Convergence In Distribution}
+Let $X_1, \, \ldots, \, X_n$ be a sequence of random variables then $X_{i} \; \rightarrow^{\mathcal{D}} \; X$. If $\lim_{n \rightarrow \infty} F_{X_{n}}(X) = F(X)$.
+
+\vspace{2mm}
+\textbf{Convergence Relationships}
+
+
+$$ X_{n} \, \rightarrow^{A.S.} \, X \; \Rightarrow \; X_{n} \, \rightarrow^{\mathcal{P}} \, X $$
+
+$$ X_{n} \, \rightarrow^{\mathcal{P}} \, X \; \Rightarrow \; X_{n} \, \rightarrow^{\mathcal{D}} \, X$$
+
+\vspace{2mm}
+
+\noindent
+\textbf{Consistent Estimator}: An estimator $T(\textbf{x})$ for $\boldsymbol \theta$ is \textbf{consistent}  if it converges in probability.
+
+
+\vspace{2mm}
+
+\textbf{Consistency is the minimum requirement for an estimator!}
+
+
+\vspace{2mm}
+
+\noindent
+\begin{theorem}
+Let $X_1, \, \ldots, \, X_n$ be a sequence of random variables such that $X_{n} \, \rightarrow^{\mathcal{P}} \, X$ and $h(X)$ is continuous.  Then $h(X_n) \, \rightarrow^{\mathcal{P}} \, X$.
+\end{theorem}
+
+
+\noindent
+\begin{theorem}{$S^{2}$ is a consistent estimator ( if $S_{n} \rightarrow 0$)}\newline
+\textbf{Proof:}  
+\begin{align}
+\lim_{n \rightarrow \infty} P(\vert S_n^{2} - \sigma^{2} \vert^{2} > \epsilon) \; &\leq \; \lim_{n \rightarrow \infty} \frac{ E \left( \,\vert S_n^{2} - \sigma^{2} \vert^{2} \, \right)} {\epsilon} \\
+&= \; \lim_{n \rightarrow \infty} \frac{ \text{Var}(S_n^2)}{\epsilon}\\
+&= \; 0
+\end{align}
+by Chebshev's theorem.
+\end{theorem}
+
+
+\vspace{2mm}
+
+\noindent
+\begin{theorem}{Weak Law Of Large Numbers} \newline
+Let $X_1, \, \ldots, \, X_n$ be i.i.d  of random variables with $E[x_i] \, = \, \mu$ and $\text{Var}(x_i) \, = \, \sigma^{2} \, < \, \infty$ then $x_n \, \rightarrow^{\mathcal{P}} \, \mu $
+\textbf{Proof:}  
+\begin{align}
+\lim_{n \rightarrow \infty} P(\vert \bar{x} - \mu \vert > \epsilon) \; &\leq \; \lim_{n \rightarrow \infty} \frac{ E \left( \,\vert \bar{x} - \mu \vert^{2} \, \right)} {\epsilon^{2}} \\
+&= \; \lim_{n \rightarrow \infty} \frac{ \text{Var}(\bar{x})}{\epsilon^{2}}\\
+&= \; \lim_{n \rightarrow \infty} \frac{\sigma_{n}^{2}}{n \, \epsilon}\\
+&= \; 0
+\end{align}
+\end{theorem}
+
+\vspace{2mm}
+
+\noindent
+\begin{theorem}{Central Limit Theorem}\newline
+Let $X_1, \, ,X_2, \,  \ldots, $ be i.i.d  of random variables with $E[x_i] \, = \, \mu$ and $0 \, < \, \text{Var}(x_i) \, = \, \sigma^{2} \, < \,  \infty$ then,
+$$ \frac{X_{n} - \mu }{\sigma / \sqrt{n}} \; \rightarrow^{\mathcal{D}} N(0,1)$$
+\end{theorem}
+
+
+\subsection{Maximum Likelyhood Esimators}
+
+The \textbf{maximum likelyhood estimator} is the value of a population distribution $\theta$ that maximizes the probability of observing the sample.  We can find the MLE from a random sample$x_1, x_2, \, \ldots \, x_{n}$ from $f(x \vert \theta)$ then the \textbf{likelyhood} function is defined as,
+
+$$ L(\theta  \, \vert x_1, \, x_2, \, \ldots, \, x_n)  \; = \; \prod_{i=1}^{n}f(x_{i} \, \vert \, \theta) $$
+
+
+\noindent
+Then we can find the MLE $\widehat{\theta}$ such that, 
+
+$$ 
+\frac{\partial L(\theta \, \vert x_1, x_2, \ldots, x_n)}{\partial \theta}  \; = \; 0 
+\qquad \text{or} \qquad 
+\frac{\partial \log(L(\theta \, \vert x_1, \, \ldots ))}{\partial \theta}  \; = \; 0 
+$$
+
+
+\noindent
+\begin{theorem}{Invariance Property Of MLE} \newline
+If $\widehat{\theta}$ is the MLE of $\theta$, then for any function $\tau(\theta)$, the MLE of $\tau(\theta)$ is $\tau(\widehat{\theta})$.
+\end{theorem}
+
+\vspace{2mm}
+
+\noindent
+\textbf{Example:}
+$X_1, \, ,X_2, \,  \ldots, X_n$  i.i.d. Bernoulli($\phi$).  Find the MLE of $\phi$.
+
+\vspace{1mm}
+
+\noindent
+The likelyhood function is,
+
+\begin{align}
+L(\phi  \, \vert x_1, \, x_2, \, \ldots, \, x_n)  \; &= \; \prod_{i=1}^{n}f(x_{i} \, \vert \, \phi ) \\
+&= \; \prod_{i=1}^{n}\, \phi^{x_i} \, (1- \phi)^{ 1 - x_i} \\
+&= \; \phi^{\sum_{i=1}^{n} x_i } \, (1- \phi)^{\sum_{i=1}^{n} (1 - x_i)} \\
+&= \; \phi^{n \bar{x}} \, (1- \phi)^{n\,  (1 - \bar{x})}
+\end{align}
+
+\noindent
+Or,
+
+\begin{align}
+\log(L(\phi  \, \vert \ldots )
+ \; &= \; n \, \bar{x} \, \log (\phi)  \, + \, n \, (1 - \bar{x}) \, \log(1- \phi)
+\end{align}
+
+\noindent
+So, 
+
+\begin{align}
+\frac{\partial \log(L)}{\partial \theta}
+ \; = \; 
+ \frac{n \, \bar{x} }{\phi}  \, - \,  \frac{n  \, (1-  \bar{x}) }{(1 - \phi)} 
+ \;  &= \; 0\\
+\Rightarrow \;  n  \, \bar{x} \, (1-  \widehat{\phi} ) -  n  \, \widehat{\phi} \, (1 - \bar{x} ) \; &= \; 0  \\
+\Rightarrow \; \widehat{\phi}  \; & = \; \bar{x} 
+\end{align}
+
+\noindent
+This is the average of overall positive outcomes.  We can test that this is the maximum, by taking the second derivative:
+
+
+\begin{align}
+\frac{\partial^{2} \log(L(\widehat{\phi})}{\partial \theta^{2}}
+ \; &= \; 
+ \frac{-n \, \bar{x} }{\widehat{\phi}^{2}}  \, - \,  \frac{n  \, (1-  \bar{x}) }{(1 - \widehat{\phi})^{2}}   \vert_{\widehat{\phi} = \bar{x}}  \\
+ &= \;   \frac{-n \, \bar{x} }{\bar{x} ^{2}}  \, - \, \frac{n  \, (1-  \bar{x}) }{(1 - \bar{x} )^{2}} \\
+  &= \;   \frac{ - n \, ( 1 - \bar{x} ) \,  - n \, \bar{x}  }{\bar{x} \, (1 - \bar{x} )} 
+\end{align}
+
+\vspace{2mm}
+
+\noindent
+The MLE has issues with existence. 
+
+
+\vspace{2mm}
+
+
+\noindent
+\begin{theorem}{The MLE is a consistent estimator} \newline
+It also has optimal variance, but can be difficult to compute.
+\end{theorem}
+
+
+
+\subsection{Bayesian Estimators}
+
+
+In the \textbf{classical approach or frequentist}, $\theta$ is known, but fixed.  $x_1, x_2, \ldots, x_n$ are drawn from a population index by $theta$ and knowledge about the value of is $\theta$ is obtained. In a \textbf{Bayesian approach}, $\theta$ is a quantity whose variation can be described by a probability distribution called a prior, $P(\theta)$.  A sample is taken from a population and used to update the prior distribution , now called the posterior distribution, $P(\theta \, \vert \, \textbf{x})$.
+
+\vspace{1mm}
+
+Let $f(\theta \, \vert \, \textbf{x})$ be the sampling distribution then,
+
+$$ P(\theta \, \vert \, \textbf{x})
+ \; = \; 
+\frac{ P ( \textbf{x} \, \vert \, \theta) \, P(\theta)}{m(\textbf{x})}, \quad \text{where} \qquad m(\textbf{x}) \; = \; \int P ( \textbf{x} \, \vert \, \theta) P(\theta) d\theta
+ $$
+ 
+The \textbf{Bayesian estimator} could then be taken the be the expected value:
+ 
+ $$ \widehat{\theta} \; = \; E(\theta \, \vert \, \textbf{x})$$
+ 
+ \noindent
+This requires us to calculate the full posterior distribution. Instead, one could use a \textbf{Bayesian estimator} that is called the \textbf{Maximum A-Posteriori (MAP)}:
+ 
+  $$ \widehat{\theta} \; = \; \max_{\theta} P(\theta \, \vert \, \textbf{x)}$$
+  
+ \noindent
+\textbf{Note:} Bayesian estimators are ALWAYS biased due to their choice of prior, however, they can reduce the variance in our estimators.
+
+
+\vspace{2mm}
+
+\noindent
+\textbf{Example:}
+Let $y \, \sim \, bin(n,p)$ and $p \, \sim \, beta(\alpha, \beta)$, then 
+
+\begin{align}
+P(p \, \vert \, y ) \; &= \frac{ \; P(y \, \vert \, p) P(p) }{m(y)} \\
+ &= \; \binom{n}{k} \, p^{y} \, (1-p)^{n-y} \, \frac{\Gamma(\alpha + \beta}{\Gamma(\alpha) \, \Gamma(\beta) } \, p^{
+ \alpha-1} \, (1-p)^{\beta -1} \\
+&= \; beta(y + \alpha, n- y+ \beta) 
+ \end{align}
+ 
+ \noindent
+ This means the Bayesian estimate of $p$ is,
+ \begin{align}
+ \widehat{p}_{\text{Bayes}} \; &= \; \frac{y + \alpha}{y + \alpha + (n - y + \beta} \\
+ &= \; \frac{y + \alpha}{\alpha + \beta + n} \\
+ &= \; \left( \frac{n}{\alpha + \beta + n } \right) \, \frac{y}{n} + \left( \frac{ \alpha + \beta }{\alpha + \beta + n} \right) \,  \left(\frac{\alpha}{\alpha + \beta}\right)
+\end{align}
+
+\noindent
+Note that this is a linear combination of the sample mean and the prior mean.  However, as the sample size grows the contribution of the prior mean grows smaller and we get more confident in the sample mean.
+
+\vspace{2mm}
+
+\textbf{In the limit as the sample size $n \rightarrow \infty$ Bayesian and classical estimators should converge to the same estimator.}  
+
+\vspace{2mm}
+\noindent
+Indeed, the maximum likelyhood estimator is the same thing as a maximum a-posteriori estimator with uniform prior!
+
+
+ 
+
+\subsection{Evaluating Estimators}
+
+For continuous random variables
+
+\begin{align}
+\text{MSE(\widehat{\theta})} \; &= \; E_{\theta} (\widehat{\theta} - \theta)^{2} \\
+&= \; E_{\theta}(\theta^{2}) - E_\theta(\theta)^{2} \\
+&= \; E_{\theta}(\theta^{2}) 
+\end{align}
+
+
+\section{Confidence Intervals}
+
+\section{Statistical Testing}
+
+\subsection{Hypothesis Testing}
+
+\subsection{$\chi^{2}$ ``Goodness Of Fit" Tests}
+
+\subsection{AB Testing}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
